@@ -15,4 +15,8 @@
     <ProjectReference Include="..\BlueNest.Services.Abstraction\BlueNest.Services.Abstraction.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
