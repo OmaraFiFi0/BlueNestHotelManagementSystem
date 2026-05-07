@@ -47,7 +47,7 @@ namespace BlueNest.API
 
             builder.Services.AddScoped<IRoomService,RoomService>();
             builder.Services.AddTransient<IAttachmentService, AttachmentService>();
-
+              
 
             var app = builder.Build();
 
