@@ -2,8 +2,8 @@
 using BlueNest.Core.Contracts;
 using BlueNest.Core.Entities.RoomModule;
 using BlueNest.Services.Abstraction;
-using BlueNest.Shared.DTOs;
 using BlueNest.Shared.DTOs.QueryParamters;
+using BlueNest.Shared.DTOs.RoomDTOs;
 using BlueNest.Shared.Reponse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
