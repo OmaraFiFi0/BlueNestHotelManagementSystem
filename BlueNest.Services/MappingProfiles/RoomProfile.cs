@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BlueNest.Core.Entities.RoomModule;
-using BlueNest.Shared.DTOs;
+using BlueNest.Shared.DTOs.RoomDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

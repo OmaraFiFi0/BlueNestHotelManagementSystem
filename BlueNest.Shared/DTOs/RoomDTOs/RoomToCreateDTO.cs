@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlueNest.Shared.DTOs
+namespace BlueNest.Shared.DTOs.RoomDTOs
 {
     public class RoomToCreateDTO
     {
