@@ -93,6 +93,9 @@ namespace BlueNest.API
 
             builder.Services.AddTransient<IEmailService,EmailService>();
 
+            builder.Services.AddScoped<IBookingService , BookingService>();
+
+            builder.Services.AddHttpClient<IPaymentService,PaymentService>();
             var app = builder.Build();
 
             await app.MigrateDatabaseAsync();
@@ -107,8 +110,6 @@ namespace BlueNest.API
                
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseAuthorization();
 
             app.UseStaticFiles();

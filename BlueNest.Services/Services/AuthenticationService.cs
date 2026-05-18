@@ -170,29 +170,29 @@ namespace BlueNest.Services.Services
         {
             // Token [ Issure - Audience - ExpireDate - Claims - SignInCreditional ] 
 
-            
-            var claims = new List<Claim>();
+
+            var claim = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!);
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id);
-                new Claim("Activity", user.IsActive.ToString());
-            }
+                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                new Claim("Activity", user.IsActive.ToString()),
+            };
 
             var roles = await _userManager.GetRolesAsync(user);
+
             foreach (var role in roles)
-                claims.Add(new Claim(ClaimTypes.Role, role));
+                claim.Add(new Claim(ClaimTypes.Role, role));
 
 
             var securityKey = _configuration["JwtOptions:SecretKey"]!;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
-
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtOptions:Issuer"],
                 audience: _configuration["JwtOptions:Audience"],
                 expires: DateTime.UtcNow.AddHours(1),
-                claims: claims,
+                claims: claim,
                 signingCredentials:cred 
 
                 );
