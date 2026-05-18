@@ -1,8 +1,9 @@
 ﻿using BlueNest.Infrastructure.Repository;
 using BlueNest.Services.Abstraction;
-using BlueNest.Shared.DTOs;
 using BlueNest.Shared.DTOs.QueryParamters;
+using BlueNest.Shared.DTOs.RoomDTOs;
 using BlueNest.Shared.Reponse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace BlueNest.API.Controllers
         }
 
         //GET : BaseUrl/api/rooms/public
+        [Authorize(Roles ="Guest")]
         [HttpGet("public")]
 
         public async Task<ActionResult<GenericResponse<IEnumerable<RoomDTO>>>> GetAllRooms(string? roomType, string? sort)
@@ -29,6 +31,7 @@ namespace BlueNest.API.Controllers
         }
 
         // GET : BaseUrl/api/Rooms/{id}
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<GenericResponse<RoomDetailsDTO>>>GetRoomDetails(int id)
         {
@@ -38,7 +41,9 @@ namespace BlueNest.API.Controllers
         }
 
         // GET : BaseUrl/api/Rooms/admin
+        [Authorize(Roles = "Admin,Staff")]
         [HttpGet("admin")]
+
         public async Task<ActionResult<GenericResponse<RoomForAdminDTO>>>GetRoomsForAdmin ([FromQuery]RoomQueryParamters? queryParamters)
         {
             var result = await _roomService.GetAllRoomForAdminOrStaffAsync(queryParamters);
@@ -48,6 +53,7 @@ namespace BlueNest.API.Controllers
 
 
         //Post : BaseUrl/api/Rooms
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public async Task<ActionResult<GenericResponse<bool>>>CreateRoom([FromBody]RoomToCreateDTO createRoom)
         {
@@ -56,7 +62,7 @@ namespace BlueNest.API.Controllers
         }
 
         // Put : BaseUrl/api/Rooms/{id}
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
 
          public async Task<ActionResult<GenericResponse<bool>>> UpdateRoom([FromRoute] int id ,[FromBody] RoomToUpdateDTO updateRoom)
@@ -67,6 +73,7 @@ namespace BlueNest.API.Controllers
         }
 
         //Delete :BaseUrl/api/Rooms/{id}
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<GenericResponse<bool>>> DeleteRoom([FromRoute] int roomId)
         {
@@ -76,6 +83,7 @@ namespace BlueNest.API.Controllers
         }
 
         // Post : BaseUrl/api/Rooms/{id}/images
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id}/images")]
         public async Task<ActionResult<GenericResponse<bool>>>UpdloadRoomImages(int id , [FromForm]List<IFormFile> files)
         {
@@ -85,7 +93,7 @@ namespace BlueNest.API.Controllers
         }
 
         // Delete : BaseUrl/api/Rooms/{id}/Images/{imageId}
-
+        [Authorize(Roles ="Admin")]
         [HttpDelete("{id}/images/{imageId}")]
 
         public  async Task<ActionResult<GenericResponse<bool>>>DeleteRoomImage(int id,int imageId)

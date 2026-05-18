@@ -2,8 +2,8 @@
 using BlueNest.Core.Contracts;
 using BlueNest.Core.Entities.RoomModule;
 using BlueNest.Services.Abstraction;
-using BlueNest.Shared.DTOs;
 using BlueNest.Shared.DTOs.QueryParamters;
+using BlueNest.Shared.DTOs.RoomDTOs;
 using BlueNest.Shared.Reponse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -239,12 +239,13 @@ namespace BlueNest.Services.Services
 
                     return genericResponse;
                 }
+                
 
-                _mapper.Map(updateRoom, room);
+                 _mapper.Map(updateRoom, room);
 
                 room.UpdatedAt = DateTime.Now;
 
-                _unitOfWork.GetRepository<Room, int>().Update(room);
+                 _unitOfWork.GetRepository<Room, int>().Update(room);
 
                 var result = await _unitOfWork.SaveChangesAsync() > 0;
 

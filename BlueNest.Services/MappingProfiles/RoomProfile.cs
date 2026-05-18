@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BlueNest.Core.Entities.RoomModule;
-using BlueNest.Shared.DTOs;
+using BlueNest.Shared.DTOs.RoomDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +13,18 @@ namespace BlueNest.Services.MappingProfiles
     {
         public RoomProfile()
         {
-            CreateMap<Room,RoomDTO>();
+            CreateMap<Room, RoomDTO>();
 
             CreateMap<Room, RoomDetailsDTO>()
                 .ForMember(
-                dest=>dest.ImageUrls,
-                opt=>opt.MapFrom<RoomImageValueResolver>()
+                dest => dest.ImageUrls,
+                opt => opt.MapFrom<RoomImageValueResolver>()
                 );
 
             CreateMap<Room, RoomForAdminDTO>();
 
             CreateMap<RoomToCreateDTO, Room>();
+
 
             CreateMap<RoomToUpdateDTO, Room>();
         }

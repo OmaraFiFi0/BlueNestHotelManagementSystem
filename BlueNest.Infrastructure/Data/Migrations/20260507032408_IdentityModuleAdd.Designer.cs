@@ -4,6 +4,7 @@ using BlueNest.Infrastructure.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlueNest.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    partial class HotelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260507032408_IdentityModuleAdd")]
+    partial class IdentityModuleAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,60 +24,6 @@ namespace BlueNest.Infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BlueNest.Core.Entities.BookingModule.Booking", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HotelUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("PaidDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PayMobOrderId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PayMobPaymentKey")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HotelUserId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Booking");
-                });
 
             modelBuilder.Entity("BlueNest.Core.Entities.RoomModule.Room", b =>
                 {
@@ -370,25 +319,6 @@ namespace BlueNest.Infrastructure.Data.Migrations
                     b.ToTable("StaffUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BlueNest.Core.Entities.BookingModule.Booking", b =>
-                {
-                    b.HasOne("BlueNest.Core.Entities.SecurityModule.HotelUser", "HotelUser")
-                        .WithMany("GuestBookings")
-                        .HasForeignKey("HotelUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlueNest.Core.Entities.RoomModule.Room", "Room")
-                        .WithMany("RoomBookings")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HotelUser");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("BlueNest.Core.Entities.RoomModule.RoomImage", b =>
                 {
                     b.HasOne("BlueNest.Core.Entities.RoomModule.Room", null)
@@ -460,14 +390,7 @@ namespace BlueNest.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BlueNest.Core.Entities.RoomModule.Room", b =>
                 {
-                    b.Navigation("RoomBookings");
-
                     b.Navigation("RoomImages");
-                });
-
-            modelBuilder.Entity("BlueNest.Core.Entities.SecurityModule.HotelUser", b =>
-                {
-                    b.Navigation("GuestBookings");
                 });
 #pragma warning restore 612, 618
         }
