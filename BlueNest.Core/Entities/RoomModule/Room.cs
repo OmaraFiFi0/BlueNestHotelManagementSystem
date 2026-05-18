@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlueNest.Core.Entities.BookingModule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,7 @@ namespace BlueNest.Core.Entities.RoomModule
 
 
         public ICollection<RoomImage> RoomImages { get; set; } = [];
+
+        public ICollection<Booking> RoomBookings { get; set; } = [];
     }
 }

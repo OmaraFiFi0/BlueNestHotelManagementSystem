@@ -20,24 +20,31 @@ namespace BlueNest.Infrastructure.Repository
             _dbContext = dbContext;
         }
         public async Task<IEnumerable<TEntity>> GetAllAsync() => await _dbContext.Set<TEntity>().ToListAsync();
-        
+
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(
             Expression<Func<TEntity, bool>>? Filter = null,
             Expression<Func<TEntity, object>>? OrderByExp = null,
-            Expression<Func<TEntity, object>>? OrderByDescExp = null)
+            Expression<Func<TEntity, object>>? OrderByDescExp = null,
+            List<Expression<Func<TEntity, object>>>? InCludes = null)
         {
             var Query = _dbContext.Set<TEntity>().AsQueryable();
-            
-            if(Filter != null)
+
+            if (Filter != null)
                 Query = Query.Where(Filter);
 
-            if(OrderByExp != null)
+            if (InCludes is not null)
+            {
+                foreach (var inclue in InCludes)
+                    Query = Query.Include(inclue);
+            }
+
+            if (OrderByExp != null)
                 Query = Query.OrderBy(OrderByExp);
 
-            if(OrderByDescExp != null)
-                Query=Query.OrderByDescending(OrderByDescExp);
-            
+            if (OrderByDescExp != null)
+                Query = Query.OrderByDescending(OrderByDescExp);
+
             return await Query.ToListAsync();
         }
 
@@ -46,27 +53,27 @@ namespace BlueNest.Infrastructure.Repository
 
 
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
-       
 
-        public void Delete(TEntity entity)=> _dbContext.Set<TEntity>().Remove(entity);
-        
 
-        public void Update(TEntity entity)=> _dbContext.Set<TEntity>().Update(entity);
+        public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
 
-        public async Task<TEntity?> GetByIdAsync(TKey id, Expression<Func<TEntity, bool>>? filter = null 
-            , List<Expression<Func<TEntity,object>>>?Includes=null)
+
+        public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
+
+        public async Task<TEntity?> GetByIdAsync(TKey id, Expression<Func<TEntity, bool>>? filter = null
+            , List<Expression<Func<TEntity, object>>>? Includes = null)
         {
             var Query = _dbContext.Set<TEntity>().AsQueryable();
-            if(filter is not null)
+            if (filter is not null)
             {
                 Query = Query.Where(filter);
             }
 
-            if(Includes is not null)
+            if (Includes is not null)
             {
-                foreach(var include in Includes)
+                foreach (var include in Includes)
                 {
-                    Query=Query.Include(include);
+                    Query = Query.Include(include);
                 }
             }
 

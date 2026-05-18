@@ -1,0 +1,38 @@
+﻿using BlueNest.Core.Entities.RoomModule;
+using BlueNest.Core.Entities.SecurityModule;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BlueNest.Core.Entities.BookingModule
+{
+    public class Booking:BaseEntity<Guid>
+    {
+        public DateTime CheckInDate { get; set; }
+
+        public DateTime CheckOutDate { get; set; }
+
+        public decimal TotalAmount { get; set; }
+
+        public string Currency { get; set; } = "EGP";
+
+        public BookingStatus Status { get; set; } = BookingStatus.PaymentPending;
+
+        public string? PayMobOrderId { get; set; }
+
+        public string? PayMobPaymentKey { get; set; }
+
+        public DateTime PaidDate { get; set; }
+
+        public HotelUser HotelUser { get; set; } = null!;
+
+        public string HotelUserId { get; set; } = null!;
+
+        public Room Room { get; set; } = null!;
+
+        public int RoomId { get; set; } 
+
+    }
+}

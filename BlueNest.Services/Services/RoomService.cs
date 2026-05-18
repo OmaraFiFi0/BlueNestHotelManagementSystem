@@ -239,12 +239,13 @@ namespace BlueNest.Services.Services
 
                     return genericResponse;
                 }
+                
 
-                _mapper.Map(updateRoom, room);
+                 _mapper.Map(updateRoom, room);
 
                 room.UpdatedAt = DateTime.Now;
 
-                _unitOfWork.GetRepository<Room, int>().Update(room);
+                 _unitOfWork.GetRepository<Room, int>().Update(room);
 
                 var result = await _unitOfWork.SaveChangesAsync() > 0;
 

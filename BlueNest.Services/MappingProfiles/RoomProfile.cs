@@ -13,17 +13,18 @@ namespace BlueNest.Services.MappingProfiles
     {
         public RoomProfile()
         {
-            CreateMap<Room,RoomDTO>();
+            CreateMap<Room, RoomDTO>();
 
             CreateMap<Room, RoomDetailsDTO>()
                 .ForMember(
-                dest=>dest.ImageUrls,
-                opt=>opt.MapFrom<RoomImageValueResolver>()
+                dest => dest.ImageUrls,
+                opt => opt.MapFrom<RoomImageValueResolver>()
                 );
 
             CreateMap<Room, RoomForAdminDTO>();
 
             CreateMap<RoomToCreateDTO, Room>();
+
 
             CreateMap<RoomToUpdateDTO, Room>();
         }

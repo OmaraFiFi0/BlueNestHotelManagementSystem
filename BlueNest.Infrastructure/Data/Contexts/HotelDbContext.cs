@@ -1,4 +1,5 @@
-﻿using BlueNest.Core.Entities.SecurityModule;
+﻿using BlueNest.Core.Entities.BookingModule;
+using BlueNest.Core.Entities.SecurityModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace BlueNest.Infrastructure.Data.Contexts
             modelBuilder.Entity<HotelUser>().ToTable("Users");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<StaffUser>().ToTable("StaffUsers");
+            modelBuilder.Entity<Booking>().Property(B => B.TotalAmount).HasPrecision(8, 2);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

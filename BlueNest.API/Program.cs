@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 
 namespace BlueNest.API
 {
+
     public class Program
     {
         public static async Task Main(string[] args)
@@ -38,7 +39,7 @@ namespace BlueNest.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddAutoMapper(A =>
             {
@@ -53,16 +54,16 @@ namespace BlueNest.API
 
 
 
-            builder.Services.AddScoped<IRoomService,RoomService>();
+            builder.Services.AddScoped<IRoomService, RoomService>();
             builder.Services.AddTransient<IAttachmentService, AttachmentService>();
 
             builder.Services.AddScoped<IDataIntializer, IdentityDataIntializer>();
-            
+
             // Identity configuration To Inject In RunTime Usermanager,RoleManager
             builder.Services.AddIdentityCore<HotelUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<HotelDbContext>();
-            
+
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 
@@ -86,13 +87,16 @@ namespace BlueNest.API
                     };
                 });
 
-            
-         builder.Services.Configure<EmailSettings>(
-             builder.Configuration.GetSection("EmailSettings")
-            );
 
-            builder.Services.AddTransient<IEmailService,EmailService>();
+            builder.Services.Configure<EmailSettings>(
+                builder.Configuration.GetSection("EmailSettings")
+               );
 
+            builder.Services.AddTransient<IEmailService, EmailService>();
+
+            builder.Services.AddScoped<IBookingService, BookingService>();
+
+            builder.Services.AddHttpClient<IPaymentService, PaymentService>();
             var app = builder.Build();
 
             await app.MigrateDatabaseAsync();
@@ -104,11 +108,9 @@ namespace BlueNest.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-               
+
             app.UseHttpsRedirection();
             app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseAuthorization();
 
             app.UseStaticFiles();
